@@ -2,3 +2,5 @@
 
 !.gitignore
 !PhaserHelperClasses/
+
+!Card.js
