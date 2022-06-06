@@ -1,0 +1,132 @@
+{
+  "canvas-version": 2,
+  "settings": {
+    "className": "Level_l",
+    "sceneWidth": 1138,
+    "sceneHeight": 640,
+    "generateOnSave": true,
+    "enableStepping": false,
+    "lang": "JAVA_SCRIPT",
+    "baseClass": "Phaser.State",
+    "backgroundColor": [
+      180,
+      180,
+      180
+    ],
+    "gridColor": [
+      200,
+      200,
+      200
+    ],
+    "showGrid": true,
+    "create_after": "// Listens for keyboard presses\r\nthis.geoKey1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);\r\nthis.geoKey1.onDown.add(function(){if(Global.debugPress.one != 2) {Global.debugPress.one = 1;}else{Global.debugPress.one = 3;}},this);\r\nthis.geoKey1.onUp.add(function(){if(Global.debugPress.one == 1) {Global.debugPress.one = 0;}else if(Global.debugPress.one == 3){Global.debugPress.one = 2;}},this);\r\nthis.geoKey2 = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);\r\nthis.geoKey2.onDown.add(function(){if(Global.debugPress.shift != 2) {Global.debugPress.shift = 1;}else{Global.debugPress.shift = 3;}},this);\r\nthis.geoKey2.onUp.add(function(){if(Global.debugPress.shift == 1) {Global.debugPress.shift = 0;}else if(Global.debugPress.shift == 3){Global.debugPress.shift = 2;}},this);\r\nthis.geoKey3 = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);\r\nthis.geoKey3.onDown.add(function(){if(Global.debugPress.ctrl != 2) {Global.debugPress.ctrl = 1;}else{Global.debugPress.ctrl = 3;}},this);\r\nthis.geoKey3.onUp.add(function(){if(Global.debugPress.ctrl == 1) {Global.debugPress.ctrl = 0;}else if(Global.debugPress.ctrl == 3){Global.debugPress.ctrl = 2;}},this);\r\n\r\n// doesn't disable game when clicked off in preview, but prevent audio from playing after ad close on SDK\r\n   var subStr = window.location.href;\r\n   if(subStr.substring(0,17)=='http://localhost:' || subStr.substring(0,29)=='https://playable.applovindemo'){\r\n       this.game.stage.disableVisibilityChange = true;\r\n}\r\nelse{\r\n\tthis.game.stage.disableVisibilityChange = false;\r\n}\r\nthis.afterCreate();"
+  },
+  "stateSettings": {
+    "scaleMode": "SHOW_ALL",
+    "pageAlignHorizontally": true,
+    "pageAlignVertically": true,
+    "stageBackgroundColor": [
+      0,
+      0,
+      0
+    ],
+    "autoLoad": true,
+    "preloadSpriteId": "",
+    "preloadSprite_direction": 0,
+    "load.pack": []
+  },
+  "world": {
+    "type": "group",
+    "id": "8a0fc0bc-e3be-4656-9585-f855ac8ba0bb",
+    "info": {
+      "editorName": "Level",
+      "setAll": [],
+      "children": [
+        {
+          "type": "image",
+          "id": "a661bd17-fe59-46bd-972d-3afffbb16a98",
+          "asset": "0",
+          "info": {
+            "editorName": "camera",
+            "editorField": true,
+            "x": 569,
+            "y": 320,
+            "renderable": false,
+            "anchor.x": 0.5,
+            "anchor.y": 0.5,
+            "tint": "0xff0000"
+          }
+        },
+        {
+          "type": "image",
+          "id": "62e3cb54-491b-4a76-a594-d4ffd83aeb62",
+          "asset": "1",
+          "info": {
+            "editorName": "_bgPH",
+            "editorField": true,
+            "x": 569,
+            "y": 320,
+            "scale.x": 0.8,
+            "scale.y": 0.8,
+            "anchor.x": 0.5,
+            "anchor.y": 0.5
+          }
+        },
+        {
+          "type": "group",
+          "id": "495a569f-f7f3-4339-be39-8a351f00ebd2",
+          "info": {
+            "editorName": "_Game",
+            "editorField": true,
+            "setAll": [],
+            "children": []
+          }
+        },
+        {
+          "type": "group",
+          "id": "74589234-e4d5-439c-8278-aa5b4c937880",
+          "info": {
+            "editorName": "_UI",
+            "editorField": true,
+            "setAll": [],
+            "children": []
+          }
+        },
+        {
+          "type": "group",
+          "id": "f262c0a3-86bf-44e5-94a3-a2770e4cbed5",
+          "info": {
+            "editorName": "_EM",
+            "editorField": true,
+            "setAll": [],
+            "children": []
+          }
+        },
+        {
+          "type": "group",
+          "id": "69d09b4e-9355-4799-8f03-dc07c1995ce9",
+          "info": {
+            "editorName": "_RM",
+            "editorField": true,
+            "setAll": [],
+            "children": []
+          }
+        }
+      ]
+    }
+  },
+  "type": "STATE",
+  "asset-table": {
+    "0": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "debugBtn"
+    },
+    "1": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "landscape_ph"
+    }
+  },
+  "prefab-table": {}
+}

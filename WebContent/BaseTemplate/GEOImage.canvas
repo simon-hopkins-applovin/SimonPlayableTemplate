@@ -1,0 +1,60 @@
+{
+  "canvas-version": 2,
+  "settings": {
+    "className": "GEOImage",
+    "sceneWidth": 640,
+    "sceneHeight": 360,
+    "generateOnSave": true,
+    "enableStepping": false,
+    "lang": "JAVA_SCRIPT",
+    "baseClass": "Phaser.Sprite",
+    "backgroundColor": [
+      180,
+      180,
+      180
+    ],
+    "gridColor": [
+      200,
+      200,
+      200
+    ],
+    "showGrid": true
+  },
+  "stateSettings": {
+    "stageBackgroundColor": [
+      0,
+      0,
+      0
+    ],
+    "autoLoad": true,
+    "preloadSpriteId": "",
+    "preloadSprite_direction": 0,
+    "load.pack": []
+  },
+  "world": {
+    "type": "group",
+    "id": "cb380e82-ffe8-4013-99e2-218c5804fbc4",
+    "info": {
+      "editorName": "GEOImage",
+      "setAll": [],
+      "children": [{
+        "type": "image",
+        "id": "45ee36dc-ad3b-44d5-8b98-addbd76c10a9",
+        "asset": "0",
+        "info": {
+          "editorName": "Great",
+          "anchor.x": 0.5,
+          "anchor.y": 0.5,
+          "data": "{\r\ntag:'',\r\ngeoInit: 0,\r\nrootOverride:'',\r\ngeoEN:'',\r\ngeoCNS:'',\r\ngeoCNT:'',\r\ngeoES:'',\r\ngeoFR:'',\r\ngeoJA:'',\r\ngeoKO:'',\r\ngeoRU:'',\r\ngeoTR:'',\r\ngeoDE:'',\r\ngeoID:'',\r\ngeoIT:'',\r\ngeoMY:'',\r\ngeoPT:'',\r\ngeoTH:'',\r\ngeoAR:'',\r\ngeoVI:'',\r\n}"
+        }
+      }]
+    }
+  },
+  "type": "SPRITE",
+  "asset-table": {"0": {
+    "file": "WebContent/assets/pack.json",
+    "section": "playableAssets",
+    "asset": "debugBtn"
+  }},
+  "prefab-table": {}
+}

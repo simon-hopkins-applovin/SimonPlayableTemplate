@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'keep_calm_medregular';
+    src: 
+    	url(data:application/font-woff;charset=utf-8;base64,blabla) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'impactregular';
+    src: 
+    	url(data:application/font-woff;charset=utf-8;base64,DELETEMEEE) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* For reference above^, DELETE */

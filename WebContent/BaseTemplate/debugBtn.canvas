@@ -1,0 +1,61 @@
+{
+  "canvas-version": 2,
+  "settings": {
+    "className": "debugBtn",
+    "sceneWidth": 640,
+    "sceneHeight": 360,
+    "generateOnSave": true,
+    "enableStepping": false,
+    "lang": "JAVA_SCRIPT",
+    "baseClass": "Phaser.Sprite",
+    "backgroundColor": [
+      180,
+      180,
+      180
+    ],
+    "gridColor": [
+      200,
+      200,
+      200
+    ],
+    "showGrid": true,
+    "create_after": "this.textObj;\r\nthis.level = this.game.state.getCurrentState();\r\nGlobal.ButtonObjs.push(this);\r\nthis.events.onInputDown.add(this.ButtonPress,this);\r\nthis.inputEnabled = true;\r\n\r\n"
+  },
+  "stateSettings": {
+    "stageBackgroundColor": [
+      0,
+      0,
+      0
+    ],
+    "autoLoad": true,
+    "preloadSpriteId": "",
+    "preloadSprite_direction": 0,
+    "load.pack": []
+  },
+  "world": {
+    "type": "group",
+    "id": "d1d7a481-24fb-497f-b585-5dc611afa9a9",
+    "info": {
+      "editorName": "root",
+      "setAll": [],
+      "children": [{
+        "type": "image",
+        "id": "07b85c29-e8ba-43d0-9046-8a838f5db0ec",
+        "asset": "0",
+        "info": {
+          "editorName": "debugBtn",
+          "fixedToCamera": true,
+          "anchor.x": 0.5,
+          "anchor.y": 0.5
+        }
+      }]
+    }
+  },
+  "type": "SPRITE",
+  "asset-table": {"0": {
+    "file": "WebContent/assets/pack.json",
+    "section": "playableAssets",
+    "asset": "debugBtn"
+  }},
+  "prefab-table": {}
+}
