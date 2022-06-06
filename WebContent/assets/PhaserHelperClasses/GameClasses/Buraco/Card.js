@@ -18,6 +18,18 @@
 function Card(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType) {
 	
 	Phaser.Group.call(this, aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType);
+	var __backing = this.game.add.sprite(0.0, 0.0, 'square', null, this);
+	__backing.scale.set(1.6480000544481397, 2.451999784309112);
+	__backing.anchor.set(0.5, 0.5);
+	
+	var __debugText = new webfontGEOText(this.game, 0.0, 0.0);
+	this.add(__debugText);
+	
+	
+	
+	// fields
+	
+	this.f_debugText = __debugText;
 	
 }
 
@@ -34,7 +46,16 @@ Card.prototype.initialize = function( _number, _suit){
 	this.number = _number;
 	this.suit = _suit;
 	
+	this.f_debugText.setText(this.toString());
+	
 };
+
+Card.prototype.clone = function(){
+	
+	var newCard = new Card(this.game);
+	newCard.initialize(this.number, this.suit);
+	return newCard;
+}
 
 
 Card.prototype.toString = function(){
@@ -75,10 +96,31 @@ Card.prototype.toString = function(){
 	};
 	
 	
-	return numChar + " " + suitChar;
+	return numChar + suitChar;
 
 };
 
 Card.prototype.equals = function(_num, _suit){
+	
+	if(_num instanceof Card){
+		_suit = _num.suit;
+		_num = _num.number;
+	}
+
 	return this.number == _num && this.suit == _suit;
-}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

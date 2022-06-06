@@ -43,12 +43,39 @@
         "info": {
           "editorName": "group",
           "setAll": [],
-          "children": []
+          "children": [
+            {
+              "type": "image",
+              "id": "85382c1a-914c-4ef4-9198-fac36ec3e9a0",
+              "asset": "0",
+              "info": {
+                "editorName": "_backing",
+                "scale.x": 1.6480000544481397,
+                "scale.y": 2.451999784309112,
+                "anchor.x": 0.5,
+                "anchor.y": 0.5
+              }
+            },
+            {
+              "type": "prefab",
+              "prefab": "0",
+              "id": "58355391-fed4-4f52-8385-dd354fc3627a",
+              "info": {
+                "editorName": "_debugText",
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
         }
       }]
     }
   },
   "type": "GROUP",
-  "asset-table": {},
-  "prefab-table": {}
+  "asset-table": {"0": {
+    "file": "WebContent/assets/pack.json",
+    "section": "playableAssets",
+    "asset": "square"
+  }},
+  "prefab-table": {"0": "WebContent/BaseTemplate/webfontGEOText.canvas"}
 }
