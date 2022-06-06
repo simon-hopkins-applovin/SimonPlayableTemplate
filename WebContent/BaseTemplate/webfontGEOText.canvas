@@ -1,0 +1,60 @@
+{
+  "canvas-version": 2,
+  "settings": {
+    "className": "webfontGEOText",
+    "sceneWidth": 640,
+    "sceneHeight": 360,
+    "generateOnSave": true,
+    "enableStepping": false,
+    "lang": "JAVA_SCRIPT",
+    "baseClass": "Phaser.Text",
+    "backgroundColor": [
+      180,
+      180,
+      180
+    ],
+    "gridColor": [
+      200,
+      200,
+      200
+    ],
+    "showGrid": true,
+    "create_after": "this.font = this.data.webfont;\r\nthis.setLanguage();\r\nthis.addToGEODic();\r\nthis.data.geoInit=1;\r\nthis.text = this.text.replace(\"\\\\n\", \"\\n\");\r\nGlobal.webfontGEOTextObjs.push(this);"
+  },
+  "stateSettings": {
+    "stageBackgroundColor": [
+      0,
+      0,
+      0
+    ],
+    "autoLoad": true,
+    "preloadSpriteId": "",
+    "preloadSprite_direction": 0,
+    "load.pack": []
+  },
+  "world": {
+    "type": "group",
+    "id": "a57c9154-f5bb-4660-85a4-257f6c1b8b72",
+    "info": {
+      "editorName": "root",
+      "setAll": [],
+      "children": [{
+        "type": "text",
+        "id": "a20edd7b-32d3-4dee-9802-d853cd513abe",
+        "info": {
+          "editorName": "text",
+          "editorField": true,
+          "anchor.x": 0.5,
+          "anchor.y": 0.5,
+          "data": "{\r\ntag:'',\r\ngeoInit: 0,\r\nwebfont:'',\r\ngeoEN:'',\r\ngeoCNS:'',\r\ngeoCNT:'',\r\ngeoES:'',\r\ngeoFR:'',\r\ngeoJA:'',\r\ngeoKO:'',\r\ngeoRU:'',\r\ngeoTR:'',\r\ngeoDE:'',\r\ngeoID:'',\r\ngeoIT:'',\r\ngeoMY:'',\r\ngeoPT:'',\r\ngeoTH:'',\r\ngeoAR:'',\r\ngeoVI:'',\r\n}",
+          "text": "This is a text",
+          "style.fontWeight": "NORMAL",
+          "style.align": "CENTER"
+        }
+      }]
+    }
+  },
+  "type": "SPRITE",
+  "asset-table": {},
+  "prefab-table": {}
+}
