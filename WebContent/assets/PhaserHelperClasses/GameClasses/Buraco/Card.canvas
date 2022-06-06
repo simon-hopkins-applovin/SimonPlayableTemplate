@@ -27,6 +27,7 @@
       0
     ],
     "autoLoad": true,
+    "preloadSpriteId": "",
     "preloadSprite_direction": 0,
     "load.pack": []
   },

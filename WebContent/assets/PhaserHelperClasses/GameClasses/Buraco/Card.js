@@ -28,3 +28,57 @@ Card.prototype.constructor = Card;
 
 /* --- end generated code --- */
 // -- user code here --
+
+
+Card.prototype.initialize = function( _number, _suit){
+	this.number = _number;
+	this.suit = _suit;
+	
+};
+
+
+Card.prototype.toString = function(){
+	var numChar = '';
+	var suitChar = '';
+	
+	switch(this.number){
+		case 11:
+			numChar = 'J';
+			break;
+		case 12:
+			numChar = 'Q';
+			break;
+		case 13:
+			numChar = 'K';
+			break;
+		case 14:
+			numChar = 'A';
+			break;
+		default:
+			numChar = this.number.toString();
+	};
+	switch(this.suit){
+		case SUITS.SPADES:
+			suitChar = '♠';
+			break;
+		case SUITS.CLUBS:
+			suitChar = '♣';
+			break;
+		case SUITS.HEARTS:
+			suitChar = '♥';
+			break;
+		case SUITS.DIAMONDS:
+			suitChar = '♦';
+			break;
+		default:
+			suitChar = "?";
+	};
+	
+	
+	return numChar + " " + suitChar;
+
+};
+
+Card.prototype.equals = function(_num, _suit){
+	return this.number == _num && this.suit == _suit;
+}

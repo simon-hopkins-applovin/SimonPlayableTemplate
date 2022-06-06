@@ -199,8 +199,6 @@ ZumaBoard.Node = function(_index, _targetOffset, _ball){
 
 
 ZumaBoard.Node.prototype.sameBall = function(otherNode){
-	
-	
 	if(Global.onlyColors){
 		return this.ball.letter == otherNode.ball.letter;
 	}
@@ -528,7 +526,7 @@ ZumaBoard.prototype.initRunningState = function(){
 					this.setNodeToDestroy(value, true, false, true);
 				}
 				return;
-			}			
+			}
 			value.SM.onUpdate();
 			//offset the collider to be a little behind. I found myself always clicking too far behind since the balls are moving
 			var colliderPos = this.getPositionOnPathDistance(this.distanceTraveled + value.currentOffset - 10);
