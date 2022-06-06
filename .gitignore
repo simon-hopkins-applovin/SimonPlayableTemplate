@@ -1,3 +1,6 @@
-*
 !.gitignore
-!*PhaserHelperClasses/
+.project
+WebContent/*
+!WebContent/assets
+WebContent/assets/*
+!WebContent/assets/PhaserHelperClasses
