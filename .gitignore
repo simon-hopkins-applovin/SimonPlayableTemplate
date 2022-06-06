@@ -3,4 +3,4 @@
 !.gitignore
 !PhaserHelperClasses/
 
-!Card.js
+!*/Card.js
