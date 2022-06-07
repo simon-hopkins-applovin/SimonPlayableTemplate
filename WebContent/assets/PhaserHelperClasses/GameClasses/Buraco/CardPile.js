@@ -32,7 +32,6 @@ CardPile.prototype.addCard = function(card){
 	}
 	this.cards.unshift(card);
 	this.add(card);
-	card.position.setTo()
 	return this.cards;
 };
 
@@ -65,7 +64,6 @@ CardPile.prototype.removeCard = function(_num, _suit){
 CardPile.prototype.bringToTop = function(_num, _suit){
 	
 	for(var i = 0; i< this.cards.length; i++){
-		
 		if(this.cards[i].equals(_num, _suit)){
 			var targetCard = this.cards.splice(i, 1)[0];
 			this.cards.unshift(targetCard);

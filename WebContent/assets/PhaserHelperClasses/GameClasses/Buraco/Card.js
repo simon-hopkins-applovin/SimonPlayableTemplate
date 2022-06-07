@@ -18,17 +18,17 @@
 function Card(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType) {
 	
 	Phaser.Group.call(this, aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType);
-	var __backing = this.game.add.sprite(0.0, 0.0, 'square', null, this);
-	__backing.scale.set(1.6480000544481397, 2.451999784309112);
+	var __backing = this.game.add.sprite(0.0, 0.0, '4H', null, this);
 	__backing.anchor.set(0.5, 0.5);
 	
-	var __debugText = new webfontGEOText(this.game, 0.0, 0.0);
+	var __debugText = new webfontGEOText(this.game, 0.0, -29.0);
 	this.add(__debugText);
 	
 	
 	
 	// fields
 	
+	this.f_backing = __backing;
 	this.f_debugText = __debugText;
 	
 }
@@ -45,6 +45,31 @@ Card.prototype.constructor = Card;
 Card.prototype.initialize = function( _number, _suit){
 	this.number = _number;
 	this.suit = _suit;
+	var suitChar = '';
+	switch(this.suit){
+		case SUITS.HEARTS:
+			suitChar = 'H';
+			break;
+		case SUITS.SPADES:
+			suitChar = 'S';
+			break;
+		case SUITS.CLUBS:
+			suitChar = 'C';
+			break;
+		case SUITS.DIAMONDS:
+			suitChar = 'D';
+			break;
+		default:
+			suitChar = 'H';
+	};
+	var textureKey = this.number.toString() + suitChar;
+	if(this.game.cache.checkKey(Phaser.Cache.IMAGE, textureKey)){
+		console.log("success");
+		this.f_backing.loadTexture(textureKey);
+	}else{
+		this.f_backing.loadTexture("Blue Card Back");
+	}
+	this.f_backing
 	
 	this.f_debugText.setText(this.toString());
 	

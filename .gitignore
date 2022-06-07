@@ -4,3 +4,6 @@ WebContent/*
 !WebContent/assets
 WebContent/assets/*
 !WebContent/assets/PhaserHelperClasses
+!WebContent/lib/
+WebContent/lib/*
+!WebContent/lib/phaser_simon.js

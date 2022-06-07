@@ -46,12 +46,11 @@
           "children": [
             {
               "type": "image",
-              "id": "85382c1a-914c-4ef4-9198-fac36ec3e9a0",
+              "id": "62fe711d-2491-48b7-aaf3-046e93f44eb2",
               "asset": "0",
               "info": {
                 "editorName": "_backing",
-                "scale.x": 1.6480000544481397,
-                "scale.y": 2.451999784309112,
+                "editorField": true,
                 "anchor.x": 0.5,
                 "anchor.y": 0.5
               }
@@ -63,7 +62,7 @@
               "info": {
                 "editorName": "_debugText",
                 "x": 0,
-                "y": 0
+                "y": -29
               }
             }
           ]
@@ -75,7 +74,7 @@
   "asset-table": {"0": {
     "file": "WebContent/assets/pack.json",
     "section": "playableAssets",
-    "asset": "square"
+    "asset": "4H"
   }},
   "prefab-table": {"0": "WebContent/BaseTemplate/webfontGEOText.canvas"}
 }
