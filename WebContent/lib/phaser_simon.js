@@ -102,7 +102,7 @@ Phaser.Graphics.prototype.drawLine = function(line){
 //                                 __/ |       
 //                                |___/        
 
-Phaser.Rectangle.prototype.divideRect= function(numSegs, isVert, isFlush){
+Phaser.Rectangle.prototype.divideRect = function(numSegs, isVert, isFlush){
 	isVert = isVert==undefined?false:isVert;
 	isFlush = isFlush==undefined?false:isFlush;
 	var retArr = [];
@@ -128,7 +128,10 @@ Phaser.Rectangle.prototype.divideRect= function(numSegs, isVert, isFlush){
 		}
 	}
 	return retArr;
-},
+};
+
+
+
 
 Phaser.Rectangle.prototype.getLerpPoint= function(xTheta, yTheta){
 	return new Phaser.Point(Phaser.Math.linear(this.left, this.right, xTheta), Phaser.Math.linear(this.top, this.bottom, yTheta));

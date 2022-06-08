@@ -49,7 +49,7 @@
               "id": "62fe711d-2491-48b7-aaf3-046e93f44eb2",
               "asset": "0",
               "info": {
-                "editorName": "_backing",
+                "editorName": "_frontVisual",
                 "editorField": true,
                 "anchor.x": 0.5,
                 "anchor.y": 0.5
@@ -61,8 +61,19 @@
               "id": "58355391-fed4-4f52-8385-dd354fc3627a",
               "info": {
                 "editorName": "_debugText",
-                "x": 0,
-                "y": -29
+                "x": -47,
+                "y": -80
+              }
+            },
+            {
+              "type": "image",
+              "id": "f196235b-706c-43ff-b964-7e01b922860e",
+              "asset": "1",
+              "info": {
+                "editorName": "_backVisual",
+                "editorField": true,
+                "anchor.x": 0.5,
+                "anchor.y": 0.5
               }
             }
           ]
@@ -71,10 +82,17 @@
     }
   },
   "type": "GROUP",
-  "asset-table": {"0": {
-    "file": "WebContent/assets/pack.json",
-    "section": "playableAssets",
-    "asset": "4H"
-  }},
+  "asset-table": {
+    "0": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "4H"
+    },
+    "1": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "Blue Card Back"
+    }
+  },
   "prefab-table": {"0": "WebContent/BaseTemplate/webfontGEOText.canvas"}
 }

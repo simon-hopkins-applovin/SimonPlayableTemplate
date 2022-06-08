@@ -18,18 +18,22 @@
 function Card(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType) {
 	
 	Phaser.Group.call(this, aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType);
-	var __backing = this.game.add.sprite(0.0, 0.0, '4H', null, this);
-	__backing.anchor.set(0.5, 0.5);
+	var __frontVisual = this.game.add.sprite(0.0, 0.0, '4H', null, this);
+	__frontVisual.anchor.set(0.5, 0.5);
 	
-	var __debugText = new webfontGEOText(this.game, 0.0, -29.0);
+	var __debugText = new webfontGEOText(this.game, -47.0, -80.0);
 	this.add(__debugText);
+	
+	var __backVisual = this.game.add.sprite(0.0, 0.0, 'Blue Card Back', null, this);
+	__backVisual.anchor.set(0.5, 0.5);
 	
 	
 	
 	// fields
 	
-	this.f_backing = __backing;
+	this.f_frontVisual = __frontVisual;
 	this.f_debugText = __debugText;
+	this.f_backVisual = __backVisual;
 	
 }
 
@@ -42,7 +46,8 @@ Card.prototype.constructor = Card;
 // -- user code here --
 
 
-Card.prototype.initialize = function( _number, _suit){
+Card.prototype.initialize = function(_number, _suit){
+	
 	this.number = _number;
 	this.suit = _suit;
 	var suitChar = '';
@@ -64,15 +69,14 @@ Card.prototype.initialize = function( _number, _suit){
 	};
 	var textureKey = this.number.toString() + suitChar;
 	if(this.game.cache.checkKey(Phaser.Cache.IMAGE, textureKey)){
-		console.log("success");
-		this.f_backing.loadTexture(textureKey);
+		this.f_frontVisual.loadTexture(textureKey);
 	}else{
-		this.f_backing.loadTexture("Blue Card Back");
+		this.f_frontVisual.loadTexture("Blue Card Back");
 	}
-	this.f_backing
 	
 	this.f_debugText.setText(this.toString());
-	
+	this.isHidden = false;
+	this.setHidden(this.isHidden);
 };
 
 Card.prototype.clone = function(){
@@ -80,29 +84,23 @@ Card.prototype.clone = function(){
 	var newCard = new Card(this.game);
 	newCard.initialize(this.number, this.suit);
 	return newCard;
-}
+};
+
+Card.prototype.setHidden = function(isHidden){
+	this.isHidden = isHidden;
+	if(this.isHidden){
+		this.f_backVisual.alpha = 1;
+	}else{
+		this.f_backVisual.alpha = 0;
+	}
+	return this;
+};
 
 
 Card.prototype.toString = function(){
-	var numChar = '';
+	var numChar = Card.charFromNum(this.number);
 	var suitChar = '';
 	
-	switch(this.number){
-		case 11:
-			numChar = 'J';
-			break;
-		case 12:
-			numChar = 'Q';
-			break;
-		case 13:
-			numChar = 'K';
-			break;
-		case 14:
-			numChar = 'A';
-			break;
-		default:
-			numChar = this.number.toString();
-	};
 	switch(this.suit){
 		case SUITS.SPADES:
 			suitChar = '♠';
@@ -135,7 +133,57 @@ Card.prototype.equals = function(_num, _suit){
 	return this.number == _num && this.suit == _suit;
 };
 
+Card.prototype.setClickCallback = function(callback){
+	this.f_frontVisual.events.onInputDown.removeAll();
+	this.f_frontVisual.inputEnabled = true;
+	this.f_frontVisual.events.onInputDown.add(callback.bind(this, this), this);
+}
 
+
+
+Card.numFromChar = function(char){
+	switch(char){
+		case 'J':
+			return 11;
+		case 'Q':
+			return 12;
+		case 'K':
+			return 13;
+		case 'A':
+			return 14;
+		default:
+			return parseInt(char);
+	};
+};
+Card.charFromNum = function(num){
+	switch(num){
+		case 11:
+			return 'J';
+		case 12:
+			return 'Q';
+		case 13:
+			return 'K';
+		case 14:
+			return 'A';
+		default:
+			return num.toString();
+	};
+};
+
+Card.enumFromChar = function(char){
+	switch(char){
+		case 'H':
+			return SUITS.HEARTS;
+		case 'S':
+			return SUITS.SPADES;
+		case 'D':
+			return SUITS.DIAMONDS;
+		case 'C':
+			return SUITS.CLUBS;
+		default:
+			return 4;
+	};
+};
 
 
 

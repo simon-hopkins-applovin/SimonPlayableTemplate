@@ -1,11 +1,17 @@
 /**
  *
  */
-function PlayArea (_game, _bounds) {
+function PlayArea (_game, _bounds, _spreadOffset) {
 	
 	Phaser.Group.call(this, _game);
 	this.bounds = _bounds;
+	this.position.setTo(this.bounds.centerX, this.bounds.centerY);
+	this.bounds.centerOn(0,0);
 	this.pileMap = new Map();
+	this.dc = this.game.add.graphics(0,0);
+	this.add(this.dc);
+	this.dc.lineStyle(3, 0x00ff00);
+	this.spreadOffset = _spreadOffset;
 	
 }
 
@@ -15,8 +21,25 @@ PlayArea.prototype.constructor = PlayArea;
 
 
 //add a pile to a play area at the right most point
-PlayArea.prototype.addCardPile = function(key, pile){
+PlayArea.prototype.addCardPile = function(key, cardPile){
+
+	//find a space for it
+	var furthestRightX = this.bounds.left;
+	var pileArr = Array.from(this.pileMap.values()).sort(function(a, b){
+		return b.right - a.right;
+	}, this);
 	
-	this.pileMap.add(key, pile);
-	this.add(pile);
+	furthestRightX = pileArr.length>0?pileArr[0].right:furthestRightX;
+	this.pileMap.set(key, cardPile);
+	this.add(cardPile);
+	cardPile.playArea = this;
+	cardPile.position.setTo(furthestRightX + cardPile.cardBounds.width/2, this.bounds.centerY);
+	this.dc.drawShape(cardPile.cardBounds.centerOn(cardPile.x, cardPile.y));
+	
+	var cardCopy = cardPile.cards.map(function(c){return c.clone();}, this);
+	cardPile.clear();
+	cardCopy.forEach(function(c){
+		cardPile.addCard(c);
+	}, this);
+	
 };

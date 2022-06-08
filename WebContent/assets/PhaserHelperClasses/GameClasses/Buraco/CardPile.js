@@ -1,14 +1,23 @@
 /**
  *
  */
-function CardPile (_game, _assocPlayArea, _spreadOffset, _isHidden) {
+function CardPile (_game, _key, _playArea, _isHidden) {
 	
 	this.game = _game;
 	Phaser.Group.call(this, this.game);
 	this.cards = [];
-	this.assocPlayArea = _assocPlayArea;
-	this.spreadOffset = _spreadOffset;
 	this.isHidden = _isHidden;
+	this.baseSprite = this.game.add.sprite(0,0, "Blue Card Back", null, this).setAnchor(0.5, 0.5);
+	this.baseSprite.alpha= 0.1;
+	//this.baseSprite.alpha = 0;
+	this.cardBounds = new Phaser.Rectangle().copyFrom(this.baseSprite, true);
+	this.key = _key;
+	this.playArea = _playArea;
+	if(this.playArea){
+		this.playArea.addCardPile(this.key, this);
+	}
+	
+	this.onClickSignal = new Phaser.Signal();
 	
 }
 
@@ -30,12 +39,18 @@ CardPile.prototype.addCard = function(card){
 	if(!card){
 		return false;
 	}
+	if(this.playArea){
+		var pos = this.getTargetSpeadPosition(this.cards.length);
+		card.position.setTo(pos.x, pos.y);
+	}
+	card.setClickCallback(function(){
+		this.onClickSignal.dispatch(card);
+	}.bind(this));
 	this.cards.unshift(card);
 	this.add(card);
+	card.setHidden(this.isHidden);
 	return this.cards;
 };
-
-
 
 CardPile.prototype.drawTop = function(){
 	if(this.cards.length==0){
@@ -47,6 +62,16 @@ CardPile.prototype.drawTop = function(){
 CardPile.prototype.peekTop = function(){
 	return this.cards[0];
 };
+
+CardPile.prototype.getTargetSpeadPosition = function(index, asWorld){
+	
+	var pos =  new Phaser.Point(this.playArea.spreadOffset * index, 0);
+	if(asWorld){
+		pos = this.worldTransform.apply(pos);
+		pos = this.game.world.worldTransform.applyInverse(pos);
+	}
+	return pos;
+}
 
 CardPile.prototype.removeCard = function(_num, _suit){
 	var foundCard = null;
@@ -74,12 +99,28 @@ CardPile.prototype.bringToTop = function(_num, _suit){
 	return i!=this.cards.length;
 };
 
+CardPile.prototype.clear = function(){
+	this.cards.forEach(function(c){
+		c.destroy();
+	}, this);
+	this.cards = [];
+}
+
 CardPile.prototype.shuffle = function(){
-	 return Phaser.ArrayUtils.shuffle(this.cards);
+	 this.cards = Phaser.ArrayUtils.shuffle(this.cards);
+	 this.orderCards(true);
+	 return this.cards;
 };
 
-CardPile.prototype.orderCards = function(){
+//adjusts order they render
+CardPile.prototype.orderCards = function(reverse){
+	reverse = reverse==undefined?false:reverse;
+	
 	this.customSort(function(a, b){
-		return this.cards.indexOf(b) - this.cards.indexOf(a);
+		return (reverse?-1:1) * (this.cards.indexOf(b) - this.cards.indexOf(a));
 	}, this);
+	
+	this.sendToBack(this.baseSprite);
+
+	
 }
