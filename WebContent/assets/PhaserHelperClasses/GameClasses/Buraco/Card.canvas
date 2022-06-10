@@ -43,40 +43,60 @@
         "info": {
           "editorName": "group",
           "setAll": [],
-          "children": [
-            {
-              "type": "image",
-              "id": "62fe711d-2491-48b7-aaf3-046e93f44eb2",
-              "asset": "0",
-              "info": {
-                "editorName": "_frontVisual",
-                "editorField": true,
-                "anchor.x": 0.5,
-                "anchor.y": 0.5
-              }
-            },
-            {
-              "type": "prefab",
-              "prefab": "0",
-              "id": "58355391-fed4-4f52-8385-dd354fc3627a",
-              "info": {
-                "editorName": "_debugText",
-                "x": -47,
-                "y": -80
-              }
-            },
-            {
-              "type": "image",
-              "id": "f196235b-706c-43ff-b964-7e01b922860e",
-              "asset": "1",
-              "info": {
-                "editorName": "_backVisual",
-                "editorField": true,
-                "anchor.x": 0.5,
-                "anchor.y": 0.5
-              }
+          "children": [{
+            "type": "group",
+            "id": "223a5440-20f0-48c8-846a-5cb77e1a9252",
+            "info": {
+              "editorName": "_visualParent",
+              "editorField": true,
+              "setAll": [],
+              "children": [
+                {
+                  "type": "prefab",
+                  "prefab": "0",
+                  "id": "58355391-fed4-4f52-8385-dd354fc3627a",
+                  "info": {
+                    "editorName": "_debugText",
+                    "x": -47,
+                    "y": -80
+                  }
+                },
+                {
+                  "type": "image",
+                  "id": "62fe711d-2491-48b7-aaf3-046e93f44eb2",
+                  "asset": "0",
+                  "info": {
+                    "editorName": "_frontVisual",
+                    "editorField": true,
+                    "anchor.x": 0.5,
+                    "anchor.y": 0.5
+                  }
+                },
+                {
+                  "type": "image",
+                  "id": "f196235b-706c-43ff-b964-7e01b922860e",
+                  "asset": "1",
+                  "info": {
+                    "editorName": "_backVisual",
+                    "editorField": true,
+                    "anchor.x": 0.5,
+                    "anchor.y": 0.5
+                  }
+                },
+                {
+                  "type": "image",
+                  "id": "84e8cc08-39ff-4004-a2df-e3876494daa5",
+                  "asset": "2",
+                  "info": {
+                    "editorName": "_glow",
+                    "editorField": true,
+                    "anchor.x": 0.5,
+                    "anchor.y": 0.5
+                  }
+                }
+              ]
             }
-          ]
+          }]
         }
       }]
     }
@@ -92,6 +112,11 @@
       "file": "WebContent/assets/pack.json",
       "section": "playableAssets",
       "asset": "Blue Card Back"
+    },
+    "2": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "Card Glow"
     }
   },
   "prefab-table": {"0": "WebContent/BaseTemplate/webfontGEOText.canvas"}

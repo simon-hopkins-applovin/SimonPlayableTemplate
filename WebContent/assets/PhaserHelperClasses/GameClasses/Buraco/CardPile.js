@@ -8,7 +8,7 @@ function CardPile (_game, _key, _playArea, _isHidden) {
 	this.cards = [];
 	this.isHidden = _isHidden;
 	this.baseSprite = this.game.add.sprite(0,0, "Blue Card Back", null, this).setAnchor(0.5, 0.5);
-	this.baseSprite.alpha= 0.1;
+	this.baseSprite.alpha= 0.0;
 	//this.baseSprite.alpha = 0;
 	this.cardBounds = new Phaser.Rectangle().copyFrom(this.baseSprite, true);
 	this.key = _key;
@@ -17,6 +17,7 @@ function CardPile (_game, _key, _playArea, _isHidden) {
 		this.playArea.addCardPile(this.key, this);
 	}
 	
+	this.canInteract = true;
 	this.onClickSignal = new Phaser.Signal();
 	
 }
@@ -44,6 +45,9 @@ CardPile.prototype.addCard = function(card){
 		card.position.setTo(pos.x, pos.y);
 	}
 	card.setClickCallback(function(){
+		if(!this.canInteract){
+			return;
+		}
 		this.onClickSignal.dispatch(card);
 	}.bind(this));
 	this.cards.unshift(card);
@@ -52,11 +56,23 @@ CardPile.prototype.addCard = function(card){
 	return this.cards;
 };
 
+CardPile.prototype.setCanInteract = function(_canInteract){
+	this.canInteract = _canInteract;
+}
+
 CardPile.prototype.drawTop = function(){
 	if(this.cards.length==0){
 		return false;
 	}
 	return this.cards.shift();
+};
+
+
+CardPile.prototype.drawBottom = function(){
+	if(this.cards.length==0){
+		return false;
+	}
+	return this.cards.pop();
 };
 
 CardPile.prototype.peekTop = function(){
@@ -85,8 +101,18 @@ CardPile.prototype.removeCard = function(_num, _suit){
 	return foundCard;
 };
 
+CardPile.prototype.getCard = function(_num, _suit){
+	var foundCard = null;
+	for(var i = 0; i< this.cards.length; i++){
+		if(this.cards[i].equals(_num, _suit)){
+			foundCard = this.cards[i];
+			break;
+		}
+	}
+	return foundCard;
+}
 
-CardPile.prototype.bringToTop = function(_num, _suit){
+CardPile.prototype.bringToTopOfDeck = function(_num, _suit){
 	
 	for(var i = 0; i< this.cards.length; i++){
 		if(this.cards[i].equals(_num, _suit)){
@@ -95,7 +121,8 @@ CardPile.prototype.bringToTop = function(_num, _suit){
 			break;
 		}
 	};
-	
+	this.updateCardPositions();
+	this.orderCards();
 	return i!=this.cards.length;
 };
 
@@ -112,6 +139,13 @@ CardPile.prototype.shuffle = function(){
 	 return this.cards;
 };
 
+CardPile.prototype.updateCardPositions = function(){
+	for(var i = 0; i< this.cards.length; i++){
+		var pos = this.getTargetSpeadPosition(this.cards.length-i -1);
+		this.cards[i].position.setTo(pos.x, pos.y);
+	};
+}
+
 //adjusts order they render
 CardPile.prototype.orderCards = function(reverse){
 	reverse = reverse==undefined?false:reverse;
@@ -121,6 +155,22 @@ CardPile.prototype.orderCards = function(reverse){
 	}, this);
 	
 	this.sendToBack(this.baseSprite);
+};
 
-	
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

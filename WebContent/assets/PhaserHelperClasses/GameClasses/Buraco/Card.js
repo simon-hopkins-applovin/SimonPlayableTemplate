@@ -18,22 +18,29 @@
 function Card(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType) {
 	
 	Phaser.Group.call(this, aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType);
-	var __frontVisual = this.game.add.sprite(0.0, 0.0, '4H', null, this);
-	__frontVisual.anchor.set(0.5, 0.5);
+	var __visualParent = this.game.add.group(this);
 	
 	var __debugText = new webfontGEOText(this.game, -47.0, -80.0);
-	this.add(__debugText);
+	__visualParent.add(__debugText);
 	
-	var __backVisual = this.game.add.sprite(0.0, 0.0, 'Blue Card Back', null, this);
+	var __frontVisual = this.game.add.sprite(0.0, 0.0, '4H', null, __visualParent);
+	__frontVisual.anchor.set(0.5, 0.5);
+	
+	var __backVisual = this.game.add.sprite(0.0, 0.0, 'Blue Card Back', null, __visualParent);
 	__backVisual.anchor.set(0.5, 0.5);
+	
+	var __glow = this.game.add.sprite(0.0, 0.0, 'Card Glow', null, __visualParent);
+	__glow.anchor.set(0.5, 0.5);
 	
 	
 	
 	// fields
 	
-	this.f_frontVisual = __frontVisual;
+	this.f_visualParent = __visualParent;
 	this.f_debugText = __debugText;
+	this.f_frontVisual = __frontVisual;
 	this.f_backVisual = __backVisual;
+	this.f_glow = __glow;
 	
 }
 
@@ -77,6 +84,44 @@ Card.prototype.initialize = function(_number, _suit){
 	this.f_debugText.setText(this.toString());
 	this.isHidden = false;
 	this.setHidden(this.isHidden);
+	this.f_glow.alpha= 0;
+	this.raised = false;
+};
+
+Card.prototype.showGlow = function(delay){
+	if(this.glowTween){
+		this.glowTween.stop();
+	}
+	this.glowTween = this.game.add.tween(this.f_glow).to({alpha: 1}, 300, Phaser.Easing.Linear.None, true, delay);
+};
+
+Card.prototype.hideGlow = function(){
+	if(this.glowTween){
+		this.glowTween.stop();
+	}
+	this.glowTween = this.game.add.tween(this.f_glow).to({alpha: 0}, 300, Phaser.Easing.Linear.None, true);
+};
+
+Card.prototype.raiseCard = function(delay){
+	if(this.raised){
+		return;
+	}
+	this.raised = true;
+	if(this.f_visualParent.moveTween){
+		this.f_visualParent.moveTween.stop();
+	}
+	this.f_visualParent.moveTween = this.game.add.tween(this.f_visualParent).to({y: "-50"}, 300, Phaser.Easing.Sinusoidal.InOut, true, delay);
+};
+
+Card.prototype.lowerCard = function(){
+	if(!this.raised){
+		return;
+	}
+	this.raised = false;
+	if(this.f_visualParent.moveTween){
+		this.f_visualParent.moveTween.stop();
+	}
+	this.f_visualParent.moveTween = this.game.add.tween(this.f_visualParent).to({y: 0}, 300, Phaser.Easing.Sinusoidal.InOut, true);
 };
 
 Card.prototype.clone = function(){
@@ -137,7 +182,37 @@ Card.prototype.setClickCallback = function(callback){
 	this.f_frontVisual.events.onInputDown.removeAll();
 	this.f_frontVisual.inputEnabled = true;
 	this.f_frontVisual.events.onInputDown.add(callback.bind(this, this), this);
+	
+};
+
+Card.prototype.flip = function(onComplete){
+	if(!this.isHidden){
+		if(onComplete){
+			onComplete.call(this);
+		}
+		return;
+	}
+	this.game.add.sound("Card Flip").play();
+	var flip1 = this.game.add.tween(this.f_visualParent.scale).to({x:0}, 100, Phaser.Easing.Linear.None, true);
+	var flip2 = this.game.add.tween(this.f_visualParent.scale).to({x:1}, 100, Phaser.Easing.Linear.None, false);
+	flip1.onComplete.add(function(){
+		this.setHidden(false);
+	}, this);
+	flip2.onComplete.add(function(){
+		if(onComplete){
+			onComplete.call(this);
+		}
+	}, this);
+	
+	flip1.chain(flip2);
 }
+Card.prototype.disableInput = function(){
+	this.f_frontVisual.inputEnabled = false;
+};
+Card.prototype.enableInput = function(){
+	console.log('enabled');
+	this.f_frontVisual.inputEnabled = true;
+};
 
 
 

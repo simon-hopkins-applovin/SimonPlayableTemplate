@@ -10,9 +10,8 @@ function PlayArea (_game, _bounds, _spreadOffset) {
 	this.pileMap = new Map();
 	this.dc = this.game.add.graphics(0,0);
 	this.add(this.dc);
-	this.dc.lineStyle(3, 0x00ff00);
 	this.spreadOffset = _spreadOffset;
-	
+	this.updateTransform();
 }
 
 
@@ -34,7 +33,6 @@ PlayArea.prototype.addCardPile = function(key, cardPile){
 	this.add(cardPile);
 	cardPile.playArea = this;
 	cardPile.position.setTo(furthestRightX + cardPile.cardBounds.width/2, this.bounds.centerY);
-	this.dc.drawShape(cardPile.cardBounds.centerOn(cardPile.x, cardPile.y));
 	
 	var cardCopy = cardPile.cards.map(function(c){return c.clone();}, this);
 	cardPile.clear();
@@ -43,3 +41,7 @@ PlayArea.prototype.addCardPile = function(key, cardPile){
 	}, this);
 	
 };
+
+PlayArea.prototype.getCardPile = function(key){
+	return this.pileMap.get(key);
+}
