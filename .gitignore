@@ -8,3 +8,6 @@ WebContent/assets/*
 WebContent/lib/*
 !WebContent/lib/phaser_simon.js
 *.zip
+!WebContent/js/
+WebContent/js/*
+!WebContent/js/Util.js
