@@ -1,0 +1,60 @@
+{
+  "canvas-version": 2,
+  "settings": {
+    "className": "TransformHelper",
+    "sceneWidth": 640,
+    "sceneHeight": 360,
+    "generateOnSave": true,
+    "enableStepping": false,
+    "lang": "JAVA_SCRIPT",
+    "baseClass": "Phaser.Sprite",
+    "backgroundColor": [
+      180,
+      180,
+      180
+    ],
+    "gridColor": [
+      200,
+      200,
+      200
+    ],
+    "showGrid": true,
+    "create_after": "this.Start();"
+  },
+  "stateSettings": {
+    "stageBackgroundColor": [
+      0,
+      0,
+      0
+    ],
+    "autoLoad": true,
+    "preloadSpriteId": "",
+    "preloadSprite_direction": 0,
+    "load.pack": []
+  },
+  "world": {
+    "type": "group",
+    "id": "42302de7-69cc-452f-abfd-bfcff6b0df8a",
+    "info": {
+      "editorName": "TransformHelper",
+      "setAll": [],
+      "children": [{
+        "type": "image",
+        "id": "e02af96d-4645-4733-8d17-45be8646e197",
+        "asset": "0",
+        "info": {
+          "editorName": "transformSprite",
+          "anchor.x": 0.835,
+          "anchor.y": 0.845
+        }
+      }]
+    }
+  },
+  "type": "SPRITE",
+  "asset-table": {"0": {
+    "file": "WebContent/assets/pack.json",
+    "section": "playableAssets",
+    "asset": "transformSprite"
+  }},
+  "prefab-table": {}
+}
