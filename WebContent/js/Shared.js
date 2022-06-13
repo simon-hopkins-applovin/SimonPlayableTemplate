@@ -52,7 +52,7 @@ Phaser.State.prototype.afterCreate = function(){
 		}
 		this.sound.mute = false;
 	}, this);
-	
+	erqerweqr
 	this.game.add.sound("BGM-Funkometer", 0.5, true).play();
 	
 	var clickCondition = function(){

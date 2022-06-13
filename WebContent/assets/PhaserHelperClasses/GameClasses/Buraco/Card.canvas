@@ -63,7 +63,7 @@
                 },
                 {
                   "type": "image",
-                  "id": "62fe711d-2491-48b7-aaf3-046e93f44eb2",
+                  "id": "b23e8eec-4dae-4ca3-a1da-7736152c981e",
                   "asset": "0",
                   "info": {
                     "editorName": "_frontVisual",
@@ -74,7 +74,7 @@
                 },
                 {
                   "type": "image",
-                  "id": "f196235b-706c-43ff-b964-7e01b922860e",
+                  "id": "0bd9a0b7-ac93-4b69-b107-c378ab316484",
                   "asset": "1",
                   "info": {
                     "editorName": "_backVisual",
@@ -85,7 +85,7 @@
                 },
                 {
                   "type": "image",
-                  "id": "84e8cc08-39ff-4004-a2df-e3876494daa5",
+                  "id": "7f0eb720-0cb4-4f22-907f-f185c9bde4eb",
                   "asset": "2",
                   "info": {
                     "editorName": "_glow",
@@ -105,17 +105,17 @@
   "asset-table": {
     "0": {
       "file": "WebContent/assets/pack.json",
-      "section": "playableAssets",
-      "asset": "4H"
+      "section": "PlayableTemplate",
+      "asset": "4 of Hearts"
     },
     "1": {
       "file": "WebContent/assets/pack.json",
-      "section": "playableAssets",
+      "section": "PlayableTemplate",
       "asset": "Blue Card Back"
     },
     "2": {
       "file": "WebContent/assets/pack.json",
-      "section": "playableAssets",
+      "section": "PlayableTemplate",
       "asset": "Card Glow"
     }
   },

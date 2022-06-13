@@ -99,318 +99,6 @@
       "url": "assets/PhaserHelperClasses/Misc/perspective-transform.js"
     },
     {
-      "type": "image",
-      "key": "3 Cards Glow",
-      "url": "assets/Sprites/3 Cards Glow.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "7 Cards Attaboy",
-      "url": "assets/Sprites/7 Cards Attaboy.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "App Icon",
-      "url": "assets/Sprites/App Icon.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "BG-2",
-      "url": "assets/Sprites/BG-2.jpg",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "BG",
-      "url": "assets/Sprites/BG.jpg",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Blue Player Box",
-      "url": "assets/Sprites/Blue Player Box.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Buraco Logo",
-      "url": "assets/Sprites/Buraco Logo.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Card Glow",
-      "url": "assets/Sprites/Card Glow.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "2H",
-      "url": "assets/Sprites/Cards/2 of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "3C",
-      "url": "assets/Sprites/Cards/3 of Clubs.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "3H",
-      "url": "assets/Sprites/Cards/3 of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "4C",
-      "url": "assets/Sprites/Cards/4 of Clubs.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "4H",
-      "url": "assets/Sprites/Cards/4 of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "5C",
-      "url": "assets/Sprites/Cards/5 of Clubs.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "5H",
-      "url": "assets/Sprites/Cards/5 of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "6C",
-      "url": "assets/Sprites/Cards/6 of Clubs.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "6H",
-      "url": "assets/Sprites/Cards/6 of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "7H",
-      "url": "assets/Sprites/Cards/7 of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "8D",
-      "url": "assets/Sprites/Cards/8 of Diamonds.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "9D",
-      "url": "assets/Sprites/Cards/9 of Diamonds.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "14H",
-      "url": "assets/Sprites/Cards/Ace of Hearts.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Blue Card Back",
-      "url": "assets/Sprites/Cards/Blue Card Back.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "11S",
-      "url": "assets/Sprites/Cards/Jack of Spades.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "13S",
-      "url": "assets/Sprites/Cards/King of Spades.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "12S",
-      "url": "assets/Sprites/Cards/Queen of Spades.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Red Card Back",
-      "url": "assets/Sprites/Cards/Red Card Back.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "AMAZING!",
-      "url": "assets/Sprites/Custom Text/AMAZING!.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Discard Pile Box (Landscape)",
-      "url": "assets/Sprites/Discard Pile Box (Landscape).png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Discard Pile Box (Portrait)",
-      "url": "assets/Sprites/Discard Pile Box (Portrait).png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Download Button",
-      "url": "assets/Sprites/Download Button.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Full Deck Pile",
-      "url": "assets/Sprites/Full Deck Pile.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Glow",
-      "url": "assets/Sprites/Glow.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Hand",
-      "url": "assets/Sprites/Hand.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Opponent Profile Pic",
-      "url": "assets/Sprites/Opponent Profile Pic.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Play Button",
-      "url": "assets/Sprites/Play Button.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Player Profile Pic",
-      "url": "assets/Sprites/Player Profile Pic.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Red Opponent Box",
-      "url": "assets/Sprites/Red Opponent Box.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Text Box UI",
-      "url": "assets/Sprites/Text Box UI.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "INCREDIBLE_P",
-      "url": "assets/Sprites/Custom Text/INCREDIBLE_P.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Circle Mask",
-      "url": "assets/Sprites/Screen Overlay/Circle Mask.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Half Screen Mask",
-      "url": "assets/Sprites/Screen Overlay/Half Screen Mask.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Landscape Mask",
-      "url": "assets/Sprites/Screen Overlay/Landscape Mask.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Oval Mask 2",
-      "url": "assets/Sprites/Screen Overlay/Oval Mask 2.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Oval Mask",
-      "url": "assets/Sprites/Screen Overlay/Oval Mask.png",
-      "overwrite": false
-    },
-    {
-      "type": "image",
-      "key": "Screen Overlay",
-      "url": "assets/Sprites/Screen Overlay/Screen Overlay.png",
-      "overwrite": false
-    },
-    {
-      "type": "audio",
-      "key": "BGM-Funkometer",
-      "urls": ["assets/Audio/BGM-Funkometer.mp3"],
-      "autoDecode": true
-    },
-    {
-      "type": "audio",
-      "key": "Points",
-      "urls": ["assets/Audio/Points.mp3"],
-      "autoDecode": true
-    },
-    {
-      "type": "audio",
-      "key": "Whoosh",
-      "urls": ["assets/Audio/Whoosh.mp3"],
-      "autoDecode": true
-    },
-    {
-      "type": "audio",
-      "key": "Card Place",
-      "urls": ["assets/Audio/Card Place.mp3"],
-      "autoDecode": true
-    },
-    {
-      "type": "audio",
-      "key": "Shimmer",
-      "urls": ["assets/Audio/Shimmer.mp3"],
-      "autoDecode": true
-    },
-    {
-      "type": "audio",
-      "key": "Card Flip",
-      "urls": ["assets/Audio/Card Flip.mp3"],
-      "autoDecode": true
-    },
-    {
-      "type": "audio",
-      "key": "Attaboy",
-      "urls": ["assets/Audio/Attaboy.mp3"],
-      "autoDecode": true
-    },
-    {
       "type": "script",
       "key": "CardPile",
       "url": "assets/PhaserHelperClasses/GameClasses/Buraco/CardPile.js"
@@ -446,8 +134,58 @@
       "url": "assets/PhaserHelperClasses/GameClasses/Buraco/CardPile.js"
     }
   ],
+  "PlayableTemplate": [
+    {
+      "type": "image",
+      "key": "4 of Hearts",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/4 of Hearts.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "Blue Card Back",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/Blue Card Back.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "Card Glow",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/Card Glow.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "ball",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/ball.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "ball_blue",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/ball_blue.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "ball_blue_high",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/ball_blue_high.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "ball_white",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/ball_white.png",
+      "overwrite": false
+    },
+    {
+      "type": "image",
+      "key": "boardTexture",
+      "url": "assets/PhaserHelperClasses/helperClassSprites/refernceSprites/boardTexture.png",
+      "overwrite": false
+    }
+  ],
   "meta": {
-    "generated": "1654811101560",
+    "generated": "1655164328813",
     "app": "Phaser Editor",
     "url": "http://phasereditor.boniatillo.com",
     "version": "1.0",

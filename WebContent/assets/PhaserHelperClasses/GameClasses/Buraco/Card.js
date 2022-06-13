@@ -23,7 +23,7 @@ function Card(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyType)
 	var __debugText = new webfontGEOText(this.game, -47.0, -80.0);
 	__visualParent.add(__debugText);
 	
-	var __frontVisual = this.game.add.sprite(0.0, 0.0, '4H', null, __visualParent);
+	var __frontVisual = this.game.add.sprite(0.0, 0.0, '4 of Hearts', null, __visualParent);
 	__frontVisual.anchor.set(0.5, 0.5);
 	
 	var __backVisual = this.game.add.sprite(0.0, 0.0, 'Blue Card Back', null, __visualParent);
