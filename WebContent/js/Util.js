@@ -1153,3 +1153,28 @@ Util.shake = function(shakeCircle, obj, itr, maxTime, onComplete){
 	}, this);
 };
 
+Util.processImage = function(imgKey, pixelCallBack){
+	var width = this.game.cache.getImage(imgKey).width;
+	var height = this.game.cache.getImage(imgKey).height;
+	var bmd = this.game.add.bitmapData(width, height);
+	bmd.draw(imgKey, 0, 0);
+	bmd.update();
+	var row = 0;
+	var col = 0;
+	var returnArr = [];
+	bmd.processPixelRGB(function(data){
+		if(col == 0){
+			returnArr.push([]);
+		}
+		returnArr[row].push(pixelCallBack.call(this, data));
+		col++;
+		if(col>=width){
+			row++;
+			col = 0;
+		}
+	}, this, 0, 0, width, height);
+	bmd.destroy();
+	
+	return returnArr;
+};
+

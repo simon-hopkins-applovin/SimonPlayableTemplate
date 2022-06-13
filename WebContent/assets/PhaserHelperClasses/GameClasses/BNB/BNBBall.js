@@ -70,8 +70,7 @@ BNBBall.prototype.getModVelocityVector = function(deltaTime){
 BNBBall.prototype.updatePosition = function(simX, simY, visX, visY){
 	
 	this._2DPosition.setTo(simX, simY);
-	this.position.x = visX || simX;
-	this.position.y = visY || simY;
+	this.position.setTo(visX || simX, visY || simY);
 	
 	
 	this.collider.x = this.position.x;
