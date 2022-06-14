@@ -12,6 +12,7 @@ function BNBBoard(_game, _scene, _backingSprite, _blockParent, _shadowParent, _f
 	this.fxParent = _fxParent;
 	this.boundsRect = new Phaser.Rectangle().copyFrom(this.backingSprite);
 	this.dc = this.game.add.graphics(0,0);
+	
 	this.boundsRect.centerOn(this.backingSprite.centerX, this.backingSprite.centerY);
 	this.stringArr = [];
 	this.blockArr = [];
@@ -90,6 +91,7 @@ BNBBoard.prototype.initializeBoard = function(_stringArr, _smoothEdgeTexture, on
 	
 	var sourceRect = this.boundsRect;
 	var destPoly = new Phaser.Polygon(this.leftBound.end, this.rightBound.end, this.rightBound.start, this.leftBound.start);
+	this.boundsPoly = destPoly;
 	this.OOPT = new OPPTransformer(this.game, sourceRect, destPoly);
 	
 	
@@ -111,24 +113,33 @@ BNBBoard.prototype.renderBoard = function(boundsRect, blocksArray, blockFeedback
 			var xPos = Phaser.Math.linear(this.boundsRect.left, this.boundsRect.right, col/this.cols) + this.blockWidth/2;
 			var yPos = Phaser.Math.linear(this.boundsRect.top, this.boundsRect.bottom, row/this.rows) + this.blockHeight/2;
 			
-			var leftNeighbor = (col<=0?null:rowArr[col-1])?1:0;
-			var rightNeighbor = (col>=this.cols-1?null:rowArr[col+1])?1:0;
-			var topNeighbor = (row<=0?null:this.stringArr[row-1][col])?1:0;
-			var bottomNeighbor = (row>=this.rows-1?null:this.stringArr[row+1][col])?1:0;
+			var leftNeighbor = (col<=0?null:rowArr[col-1] && !this.smoothEdgeArr[row][col-1])?1:0;
+			var rightNeighbor = (col>=this.cols-1?null:rowArr[col+1]&& !this.smoothEdgeArr[row][col+1])?1:0;
+			var topNeighbor = (row<=0?null:this.stringArr[row-1][col] && !this.smoothEdgeArr[row-1][col])?1:0;
+			var bottomNeighbor = (row>=this.rows-1?null:this.stringArr[row+1][col]&& !this.smoothEdgeArr[row+1][col])?1:0;
 			
 			var useTriangle = false;
 			var angle = 0;
 			if(leftNeighbor + rightNeighbor == 1 && topNeighbor+bottomNeighbor == 1){
-				useTriangle = true && this.smoothEdgeArr[row][col]==1;
-				if(leftNeighbor+bottomNeighbor == 2){
+				
+			}
+			useTriangle = this.smoothEdgeArr[row][col]==1;
+			if(leftNeighbor+bottomNeighbor == 2){
+				angle = 0;
+			}else if(leftNeighbor + topNeighbor == 2){
+				angle = 90;
+			}else if(topNeighbor + rightNeighbor == 2){
+				angle = 180;
+			}else if(rightNeighbor + bottomNeighbor == 2){
+				angle = 270;
+			}
+			else{
+				if(leftNeighbor == 1){
 					angle = 0;
-				}else if(leftNeighbor + topNeighbor == 2){
-					angle = 90;
-				}else if(topNeighbor + rightNeighbor == 2){
-					angle = 180;
-				}else{
-					angle = 270;
+				}else if(rightNeighbor == 1){
+					angle = 270
 				}
+				
 			}
 			
 			var newBlock = useTriangle?new BNBBlock_Triangle(this.game, this.blockParent):new BNBBlock(this.game, this.blockParent);
@@ -193,8 +204,7 @@ BNBBoard.prototype.boardContainsPoint = function(xPos, yPos){
 BNBBoard.prototype.getBlockIntersection = function(moveLine, lastBlock){
 	this.dc.lineStyle(2, 0x00ff00);
 	var numItrs = Math.ceil(moveLine.length/(this.blockWidth/2));
-	
-	numItrs = Math.max(10, numItrs)*2;
+	numItrs = Math.max(2, numItrs);
 	
 	//this.dc.drawLine(moveLine);
 
@@ -257,7 +267,7 @@ BNBBoard.prototype.getBlockIntersection = function(moveLine, lastBlock){
 };
 
 
-BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, retArr, lastBlock){
+BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, retArr, lastCollision){
 	
 	if(ball.velocity.getMagnitude() == 0){
 		return;
@@ -275,12 +285,8 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 		ball.lastValidBlockPos = closestBlock;
 	}
 	
-	var foundCollision = this.getBlockIntersection(nextMoveLine, lastBlock);
-	
-	if(this.is3D){
+	var foundCollision = this.getBlockIntersection(nextMoveLine, lastCollision?lastCollision.assocBlock:null);
 		
-	}
-	
 	var hitWall = false;
 	if(!foundCollision){
 		
@@ -307,7 +313,7 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 
 			}
 		}else{
-			foundCollision = this.getGameBoundsIntersection(nextMoveLine);
+			foundCollision = this.getGameBoundsIntersection(nextMoveLine, lastCollision);
 		}
 		
 		//foundCollision = foundCollision||this.getGameBoundsIntersection(nextMoveLine);
@@ -326,21 +332,31 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 		ball.velocity = new Phaser.Point(Math.cos(reflectedRad) * ball.velocity.getMagnitude(), Math.sin(reflectedRad) * ball.velocity.getMagnitude());
 		var startPos = nextMoveLine.start;
 		var wallPointForBall = new Phaser.Point(foundCollision.i1.point.x, foundCollision.i1.point.y);
-		var offsetFromWallOnBounce = ball.collider.radius;
-
+		if(hitWall){
+			wallPointForBall.x += Math.cos(foundCollision.i1.side.normalAngle + Math.PI);
+			wallPointForBall.y += Math.sin(foundCollision.i1.side.normalAngle+ Math.PI);
+		}
 		//this.dc.drawLine(new Phaser.Line(foundCollision.i1.point.x, foundCollision.i1.point.y, foundCollision.i1.point.x + foundCollision.i1.side.normalX*20, foundCollision.i1.point.y+ foundCollision.i1.side.normalY*20))
 		distSoFar += Phaser.Point.distance(startPos, wallPointForBall);
 		ball.updatePosition(wallPointForBall.x, wallPointForBall.y);
 		var moveLength = maxDist - distSoFar;
 		var newVelVector = ball.velocity.clone().normalize().multiply(moveLength, moveLength);
 		var newMoveLine = new Phaser.Line(wallPointForBall.x, wallPointForBall.y, wallPointForBall.x + newVelVector.x, wallPointForBall.y + newVelVector.y);
-		return this.moveBall(ball, newMoveLine, maxDist, distSoFar, retArr, foundCollision.assocBlock);
+		return this.moveBall(ball, newMoveLine, maxDist, distSoFar, retArr, foundCollision);
 	
 	}
 	//just move the ball along the line
 	//don't need to recurse because the ball has already moved it's max distance
-	var visualPosition = this.is3D?this.OOPT.transform(nextMoveLine.end.x, nextMoveLine.end.y):nextMoveLine.end;
-	ball.updatePosition(nextMoveLine.end.x, nextMoveLine.end.y, visualPosition.x, visualPosition.y);
+	var visualPosition = this.is3D?this.OOPT.transform(nextMoveLine.end.x, nextMoveLine.end.y):nextMoveLine.end.clone();
+	var endBlock = this.getClosestBlock(nextMoveLine.end.x, nextMoveLine.end.y);
+	endBlock = this.getBlock(endBlock.row, endBlock.col);
+	if(this.boardContainsPoint(nextMoveLine.end.x, nextMoveLine.end.y) && endBlock.empty){
+		
+		visualPosition.clampX(endBlock.collider.left + ball.collider.radius, endBlock.collider.right-ball.collider.radius);
+		visualPosition.clampY(endBlock.collider.top + ball.collider.radius, endBlock.collider.bottom-ball.collider.radius);
+	}
+
+	ball.updatePosition(nextMoveLine.end.x, nextMoveLine.end.y, visualPosition.x ,visualPosition.y);
 	if(retArr){
 		retArr.push(this.is3D?this.OOPT.transform(nextMoveLine.end):nextMoveLine.end);
 	}
@@ -350,37 +366,14 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 };
 
 
-BNBBoard.prototype.getGameBoundsIntersection = function(line){
+BNBBoard.prototype.getGameBoundsIntersection = function(line, lastCollision){
 	if(this.ballBounceBounds instanceof Phaser.Rectangle){
 		var collision = Util.getLineRectIntersection(line, this.ballBounceBounds);
 		if(!collision){
 			return collision;
 		}
-		switch(collision.i1.side.name){
-			case "right":
-				if(line.start.x>=this.ballBounceBounds.right){
-					return false;
-				}
-				break;
-			
-			case "left":
-				if(line.start.x<=this.ballBounceBounds.left){
-					return false;
-				}
-				break;
-			case "top":
-				if(line.start.y<=this.ballBounceBounds.top){
-					return false;
-				}
-				break;
-			
-			case "bottom":
-				if(line.start.y>=this.ballBounceBounds.bottom){
-					return false;
-				}
-				break;
-		}
-		return Util.getLineRectIntersection(line, this.ballBounceBounds);
+
+		return collision;
 	}
 	else if(this.ballBounceBounds instanceof Phaser.Polygon){
 		return Util.getLinePolyIntersection(line, this.ballBounceBounds);

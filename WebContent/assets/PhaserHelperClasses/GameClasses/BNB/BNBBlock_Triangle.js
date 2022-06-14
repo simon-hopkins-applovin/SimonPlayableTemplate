@@ -66,6 +66,10 @@ BNBBlock_Triangle.prototype.initialize = function(assocBoard, colliderBounds, vi
 	angle = angle==undefined?0:angle;
 	var newCollider = new Phaser.Polygon(this.collider.topLeft, this.collider.bottomRight, this.collider.bottomLeft);
 	newCollider.rotateAround(this.collider.centerX, this.collider.centerY, angle);
+	newCollider.points.forEach(function(p){
+		p.x = p.x<this.collider.centerX?this.collider.left:this.collider.right;
+		p.y = p.y<this.collider.centerY?this.collider.top:this.collider.bottom;
+	}, this);
 	this.collider = newCollider;
 	var dc = this.game.add.graphics(0,0);
 	//this.add(dc);

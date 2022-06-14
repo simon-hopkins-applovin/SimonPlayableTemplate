@@ -51,10 +51,9 @@ BNBBall.prototype.afterCreate = function(){
 BNBBall.prototype.initialize = function(radius, xPos, yPos){
 	
 	this.position.setTo(xPos, yPos);
-	this.collider = new Phaser.Circle(this.x, this.y, radius);
+	this.collider = new Phaser.Circle(this.x, this.y, radius*2);
 	this.velocity = new Phaser.Point(0,0);
-	this.f_visual.width = radius*2;
-	this.f_visual.height = radius*2;
+	this.f_visual.resizeWithWidth(this.collider.diameter);
 	this.moveHistory = [];
 	
 };
