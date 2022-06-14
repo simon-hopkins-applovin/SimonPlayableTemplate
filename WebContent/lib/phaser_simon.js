@@ -22,7 +22,7 @@ Phaser.State.prototype.getMousePos = function(){
 // |_____/|_|___/ .__/|_|\__,_|\__, |  \____/|_.__/| |\___|\___|\__|
 //              | |             __/ |             _/ |              
 //              |_|            |___/             |__/               
-PIXI.DisplayObject.prototype.createCTA = function(doScale, touchCondition, hAnchor, vAnchor){
+PIXI.DisplayObject.prototype.createCTA= function(doScale, touchCondition, hAnchor, vAnchor){
 	if(!AppLovin){
 		console.error("AppLovin is not defined");
 		return;
@@ -102,7 +102,7 @@ Phaser.Graphics.prototype.drawLine = function(line){
 //                                 __/ |       
 //                                |___/        
 
-Phaser.Rectangle.prototype.divideRect = function(numSegs, isVert, isFlush){
+Phaser.Rectangle.prototype.divideRect= function(numSegs, isVert, isFlush){
 	isVert = isVert==undefined?false:isVert;
 	isFlush = isFlush==undefined?false:isFlush;
 	var retArr = [];
@@ -128,10 +128,7 @@ Phaser.Rectangle.prototype.divideRect = function(numSegs, isVert, isFlush){
 		}
 	}
 	return retArr;
-};
-
-
-
+},
 
 Phaser.Rectangle.prototype.getLerpPoint= function(xTheta, yTheta){
 	return new Phaser.Point(Phaser.Math.linear(this.left, this.right, xTheta), Phaser.Math.linear(this.top, this.bottom, yTheta));
@@ -147,7 +144,6 @@ Phaser.Rectangle.prototype.copyFrom = function (source, center) {
 };
 
 Phaser.Rectangle.prototype.forEachGridPoint = function(rows, cols, isSquare, callback){
-	console.log(rows, cols);
 	var gridRect = isSquare?new Phaser.Rectangle(this.x, this.y, this.width, (this.width/cols) * rows) :this;
 	var cellBounds = new Phaser.Rectangle(0, 0, gridRect.width/cols, gridRect.height/rows);
 	for(var row = 0; row< rows; row++){
@@ -158,6 +154,26 @@ Phaser.Rectangle.prototype.forEachGridPoint = function(rows, cols, isSquare, cal
 			callback.call(this, xPos, yPos, row, col, cellBounds.clone().centerOn(xPos, yPos));
 		}
 	}
+};
+
+//
+//_____      _                         
+//|  __ \    | |                        
+//| |__) |__ | |_   _  __ _  ___  _ __  
+//|  ___/ _ \| | | | |/ _` |/ _ \| '_ \ 
+//| |  | (_) | | |_| | (_| | (_) | | | |
+//|_|   \___/|_|\__, |\__, |\___/|_| |_|
+//               __/ | __/ |            
+//              |___/ |___/             
+
+Phaser.Polygon.prototype.rotateAround = function(x, y, angle){
+	
+	this.points.forEach(function(p){
+		p = p.rotate(x, y, angle, true);
+	}, this);
+	this.setTo(this.points);
+	return this;
+	
 };
 
 
@@ -173,7 +189,7 @@ Phaser.Line.prototype.setLength= function (newLength) {
 	var center = this.midPoint();
 	this.fromAngle(0,0, this.angle, newLength);
 	this.centerOn(center.x, center.y);
-	return this;
+
 };
 
 Phaser.Line.prototype.interpolate = function (t, out) {

@@ -38,7 +38,7 @@ BNBBoard.prototype.initializeBoard = function(_stringArr, _smoothEdgeTexture, on
 	this.stringArr = [];
 	
 	var blockFeedbackQueue = new ParticleQueue(this.game, this.fxParent);
-	blockFeedbackQueue.initParticles(["Daisy"], 50);
+	blockFeedbackQueue.initParticles([], 50);
 	
 	if(typeof(_stringArr) == 'string'){
 		this.stringArr = Util.processImage.call(this, _stringArr, this.pixelCallBack.bind(this));
@@ -209,6 +209,7 @@ BNBBoard.prototype.getBlockIntersection = function(moveLine, lastBlock){
 		if(lastBlock && lastBlock.row == currentBlock.row &&  lastBlock.col == currentBlock.col){
 			return false;
 		}
+		
 		var collision = Util.getLinePolyIntersection(moveLine, currentBlock.collider);
 		if(collision){
 			

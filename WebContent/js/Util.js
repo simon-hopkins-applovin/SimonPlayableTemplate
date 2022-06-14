@@ -963,33 +963,46 @@ Util.getLineRectIntersection = function(line, rect){
 	var createLine = function(p1, p2){
 		return new Phaser.Line(p1.x, p1.y, p2.x, p2.y);
 	}.bind(this);
+
+	var getIntersectData = function(_line, rectSide, sideName){
+		var pointOfIntersection = Phaser.Line.intersects(_line, rectSide);
+		rectSide.name = sideName;
+		
+		return {point: pointOfIntersection, side: rectSide};
+	}.bind(this);
 	//check top
-	intersections.push(Phaser.Line.intersects(line, createLine(rect.topLeft, rect.topRight)));
+	
+	intersections.push(getIntersectData(line, createLine(rect.topLeft, rect.topRight), "top"));
 	//check right
-	intersections.push(Phaser.Line.intersects(line, createLine(rect.topRight, rect.bottomRight)));
+	intersections.push(getIntersectData(line, createLine(rect.topRight, rect.bottomRight), "right"));
 	//check bottom
-	intersections.push(Phaser.Line.intersects(line, createLine(rect.bottomRight, rect.bottomLeft)));
+	intersections.push(getIntersectData(line, createLine(rect.bottomRight, rect.bottomLeft), "bottom"));
 	//checl left
-	intersections.push(Phaser.Line.intersects(line, createLine(rect.bottomLeft, rect.topLeft)));
+	intersections.push(getIntersectData(line, createLine(rect.bottomLeft, rect.topLeft), "left"));
 	
 	intersections = intersections.filter(function(element){
-		return element!=null;
+		return element.point!=null;
 	}, this);
 	if(intersections.length == 0){
 		return false;
 	}
 	//sort by ditance from start
 	intersections = intersections.sort(function(pointA, pointB){
-		return  Phaser.Point.distance(line.start, pointA) - Phaser.Point.distance(line.start, pointB);
+		return Phaser.Point.distance(line.start, pointA.point) - Phaser.Point.distance(line.start, pointB.point);
 	}, this);
 	
-	return {p1: intersections[0], p2: intersections[1]};
+	return {i1: intersections[0], i2: intersections[1]};
 	
 }
 
+
 Util.getLinePolyIntersection = function(line, poly){
+	if(poly instanceof Phaser.Rectangle){
+		return Util.getLineRectIntersection(line, poly);
+	}
 	var intersections = [];
 	var lines = Util.getLinesFromPoly(poly);
+	
 	lines.forEach(function(sideLine){
 		intersections.push({point: line.intersects(sideLine), side: sideLine});
 	}, this);
@@ -1000,6 +1013,7 @@ Util.getLinePolyIntersection = function(line, poly){
 	if(intersections.length==0){
 		return null;
 	}
+	
 	intersections = intersections.sort(function(a, b){
 		return Phaser.Point.distance(a.point, line.start) - Phaser.Point.distance(b.point, line.start);
 	}, this);
@@ -1058,6 +1072,7 @@ Util.getLinesFromPoly = function(poly){
 	var lines = [];
 	for(var i = 0; i< poly.points.length; i++){
 		lines.push(new Phaser.Line(poly.points[i].x, poly.points[i].y, poly.points[(i+1)%poly.points.length].x,poly.points[(i+1)%poly.points.length].y));
+		lines[i].name = "";
 	}
 	return lines;
 }
@@ -1177,4 +1192,3 @@ Util.processImage = function(imgKey, pixelCallBack){
 	
 	return returnArr;
 };
-
