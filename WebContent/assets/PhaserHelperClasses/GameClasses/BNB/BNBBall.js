@@ -53,18 +53,21 @@ BNBBall.prototype.initialize = function(radius, xPos, yPos){
 	this.position.setTo(xPos, yPos);
 	this.collider = new Phaser.Circle(this.x, this.y, radius*2);
 	this.velocity = new Phaser.Point(0,0);
+	this.speed = 0;
 	this.f_visual.resizeWithWidth(this.collider.diameter);
+	this.baseScale = this.scale.clone();
 	this.moveHistory = [];
 	
 };
 
-BNBBall.prototype.launch = function(velocity){
-	this.velocity.setTo(velocity.x, velocity.y);
-}
+BNBBall.prototype.launch = function(direction, speed){
+	this.speed= speed;
+	this.velocity.setTo(direction.x * this.speed, direction.y * this.speed);
+};
 
 BNBBall.prototype.getModVelocityVector = function(deltaTime){
-	return new Phaser.Point(this.velocity.x * deltaTime, this.velocity.y * deltaTime);
-}
+	return new Phaser.Point(this.velocity.clone().normalize().x * this.speed * deltaTime, this.velocity.clone().normalize().y * this.speed * deltaTime);
+};
 
 BNBBall.prototype.updatePosition = function(simX, simY, visX, visY){
 	

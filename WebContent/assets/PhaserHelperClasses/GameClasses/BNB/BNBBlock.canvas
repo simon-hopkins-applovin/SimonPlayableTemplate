@@ -59,7 +59,10 @@
                   "info": {
                     "editorName": "_shadow",
                     "editorField": true,
+                    "editorShow": false,
                     "y": 5,
+                    "scale.x": 0,
+                    "scale.y": 0,
                     "anchor.x": 0.5,
                     "anchor.y": 0.5
                   }
@@ -67,7 +70,7 @@
                 {
                   "type": "image",
                   "id": "b312c8da-da93-4fb2-a2bb-91363b03cf6b",
-                  "asset": "0",
+                  "asset": "1",
                   "info": {
                     "editorName": "_visual",
                     "editorField": true,
@@ -82,6 +85,9 @@
                   "info": {
                     "editorName": "_flash",
                     "editorField": true,
+                    "editorShow": false,
+                    "scale.x": 0,
+                    "scale.y": 0,
                     "anchor.x": 0.5,
                     "anchor.y": 0.5
                   }
@@ -89,12 +95,31 @@
                 {
                   "type": "image",
                   "id": "d2c7b09f-f368-4404-b544-6aa30d197e47",
-                  "asset": "0",
+                  "asset": "2",
                   "info": {
                     "editorName": "_highlight",
                     "editorField": true,
                     "anchor.x": 0.5,
                     "anchor.y": 0.5
+                  }
+                },
+                {
+                  "type": "atlas-sprite",
+                  "id": "89a04ec8-a497-4b6e-b55a-8633cd67ef45",
+                  "asset": "3",
+                  "info": {
+                    "editorName": "_anim",
+                    "editorField": true,
+                    "y": 25,
+                    "scale.x": 0.6,
+                    "scale.y": 0.6,
+                    "anchor.x": 0.5,
+                    "anchor.y": 0.5,
+                    "animations": [{
+                      "name": "destroy",
+                      "frameRate": 24,
+                      "frames": []
+                    }]
                   }
                 }
               ]
@@ -105,10 +130,28 @@
     }
   },
   "type": "GROUP",
-  "asset-table": {"0": {
-    "file": "WebContent/assets/pack.json",
-    "section": "playableAssets",
-    "asset": "square"
-  }},
+  "asset-table": {
+    "0": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "square"
+    },
+    "1": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "Sand Block White 3"
+    },
+    "2": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "Highlighted Block"
+    },
+    "3": {
+      "file": "WebContent/assets/pack.json",
+      "section": "playableAssets",
+      "asset": "sandBlockAtlas2",
+      "sprite": "Sand Melt Animation (Grayscale)/Sand Melt 1.png"
+    }
+  },
   "prefab-table": {}
 }

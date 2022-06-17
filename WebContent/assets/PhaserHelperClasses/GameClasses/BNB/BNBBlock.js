@@ -21,16 +21,23 @@ function BNBBlock(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyT
 	var __visualParent = this.game.add.group(this);
 	
 	var __shadow = this.game.add.sprite(0.0, 5.0, 'square', null, __visualParent);
+	__shadow.scale.set(0.0, 0.0);
 	__shadow.anchor.set(0.5, 0.5);
 	
-	var __visual = this.game.add.sprite(0.0, 0.0, 'square', null, __visualParent);
+	var __visual = this.game.add.sprite(0.0, 0.0, 'Sand Block White 3', null, __visualParent);
 	__visual.anchor.set(0.5, 0.5);
 	
 	var __flash = this.game.add.sprite(0.0, 0.0, 'square', null, __visualParent);
+	__flash.scale.set(0.0, 0.0);
 	__flash.anchor.set(0.5, 0.5);
 	
-	var __highlight = this.game.add.sprite(0.0, 0.0, 'square', null, __visualParent);
+	var __highlight = this.game.add.sprite(0.0, 0.0, 'Highlighted Block', null, __visualParent);
 	__highlight.anchor.set(0.5, 0.5);
+	
+	var __anim = this.game.add.sprite(0.0, 25.0, 'sandBlockAtlas2', 'Sand Melt Animation (Grayscale)/Sand Melt 1.png', __visualParent);
+	__anim.scale.set(0.6, 0.6);
+	__anim.anchor.set(0.5, 0.5);
+	__anim.animations.add('destroy', [], 24, false);
 	
 	
 	
@@ -41,6 +48,7 @@ function BNBBlock(aGame, aParent, aName, aAddToStage, aEnableBody, aPhysicsBodyT
 	this.f_visual = __visual;
 	this.f_flash = __flash;
 	this.f_highlight = __highlight;
+	this.f_anim = __anim;
 	
 	this.afterCreate();
 	
@@ -82,12 +90,10 @@ BNBBlock.prototype.initialize = function(assocBoard, colliderBounds, visualBound
 	this.assocBoard = assocBoard;
 	this.collider = colliderBounds;
 	this.visualBounds = visualBounds;
-	this.f_visual.resizeWithWidth(this.visualBounds.width-1);
-	this.f_visual.width = this.visualBounds.width;
-	this.f_visual.height = this.visualBounds.height;
-	this.f_highlight.resizeWithWidth(this.visualBoundswidth);
+	
 	
 	this.position.setTo(this.visualBounds.centerX, this.visualBounds.centerY);
+	
 	
 	
 	if(this.empty){
@@ -97,18 +103,46 @@ BNBBlock.prototype.initialize = function(assocBoard, colliderBounds, visualBound
 	lum = Util.getLuminance(lum.r, lum.g, lum.b);
 	this.baseColor = colorData.color.replace("#", "0x");
 	this.highlightColor = 0xf92ef3;
-	this.f_visual.tint = this.baseColor;
+	//this.f_visual.tint = this.baseColor;
+	if(this.baseColor == "0xf3dcb7"){
+		this.setHealth(Global.moreHealth?80:20);
+	}else{
+		
+		this.setHealth(Global.moreHealth?15:5);
+		if(this.row>6){
+			if(this.col<6){
+				if(Global.moreHealth){
+					this.setHealth(50);
+				}
+				
+			}
+		}
+	}
 	
-	this.setHealth(20);
-	
+	this.healthText.alpha = 0;
 	if(lum>200){
 		this.healthText.tint =0x000000;
 	}
+	
+//	if(this.baseColor == 0xd3b891){
+//		this.initBlockVisual("Sand Block Normal");
+//		this.f_visual.loadTexture("Sand Block Normal 1");
+//	}
+	
 	this.f_shadow.alpha = 0;
 	this.worldPosition = this.parent.worldTransform.apply(this.position);
 	this.healthText.resizeInRect(this.visualBounds.clone().scale(0.8,0.8));
+};
 
+BNBBlock.prototype.initColorVisuals = function(prefix){
 
+	this.f_visual.tint = "0x" + Util.LightenDarkenColor(this.baseColor.toString(), this.game.rnd.realInRange(-30, 30));
+	this.f_anim.tint = this.f_visual.tint;
+	this.f_visualParent.resizeWithWidth(this.visualBounds.width*2.8);
+	
+	var frames = Phaser.Animation.generateFrameNames("Sand Melt Animation (Grayscale)/Sand Melt ", 1, 27, ".png");
+	this.f_anim.animations.add("destroy", frames, 24);
+	this.f_anim.alpha = 0;
 };
 
 BNBBlock.prototype.setHealth = function(newHealth){
@@ -173,14 +207,14 @@ BNBBlock.prototype.onHit = function(){
 //	this.f_flash.alphaTween = this.game.add.tween(this.f_flash).from({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
 	
 	if(this.f_highlight){
-		this.f_visual.tint = this.highlightColor;
-		this.f_shadow.tint = this.highlightShadowColor;
-		this.game.time.events.add(100, function(){
-			this.f_visual.tint = this.baseColor;
-			this.f_shadow.tint = this.baseShadowColor;
-
-		}, this);
-		this.f_highlight.alphaTween = this.game.add.tween(this.f_highlight).from({alpha: 0.5}, 200, Phaser.Easing.Linear.None, true);
+//		this.f_visual.tint = this.highlightColor;
+//		this.f_shadow.tint = this.highlightShadowColor;
+//		this.game.time.events.add(100, function(){
+//			this.f_visual.tint = this.baseColor;
+//			this.f_shadow.tint = this.baseShadowColor;
+//
+//		}, this);
+		this.f_highlight.alphaTween = this.game.add.tween(this.f_highlight).from({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
 
 	}
 
@@ -190,10 +224,36 @@ BNBBlock.prototype.onHit = function(){
 	}
 	
 };
+
+BNBBlock.prototype.introAnim = function(){
+	this.f_visual.alpha = 0;
+	this.f_anim.alpha = 1;
+	this.f_anim.play("destroy");
+	this.f_anim.animations.currentAnim.onComplete.addOnce(function(){
+		this.f_visual.alphaTween = this.game.add.tween(this.f_visual).to({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
+	}, this);
+}
+
 BNBBlock.prototype.onBlockDestroy = function(){
+	if(this.empty){
+		return;
+	}
+	this.parent.bringToTop(this);
 	this.empty = true;
-	this.alpha = 0;
 	this.f_shadow.alpha = 0;
+	this.f_visual.alphaTween = this.game.add.tween(this.f_visual).to({alpha: 0}, 200, Phaser.Easing.Linear.None, true);
+	this.f_anim.alphaTween = this.game.add.tween(this.f_anim).to({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
+	//this.f_anim.alpha = 1;
+	this.f_anim.play("destroy");
+	this.f_anim.animations.currentAnim.onComplete.addOnce(function(){
+		this.f_anim.alpha = 0;
+	}, this);
+	var animLength = this.f_anim.animations.currentAnim.delay * this.f_anim.animations.currentAnim.frameTotal;
+	var sound = this.game.add.sound("Sand Deteriorate");
+	sound.play();
+//	this.game.add.tween(sound).to({volume:0}, 100, Phaser.Easing.Linear.None, animLength);
+	
+	
 	
 };
 

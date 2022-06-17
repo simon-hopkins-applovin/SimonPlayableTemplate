@@ -21,16 +21,23 @@ function BNBBlock_Triangle(aGame, aParent, aName, aAddToStage, aEnableBody, aPhy
 	var __visualParent = this.game.add.group(this);
 	
 	var __shadow = this.game.add.sprite(0.0, 5.0, 'square', null, __visualParent);
+	__shadow.scale.set(0.0, 0.0);
 	__shadow.anchor.set(0.5, 0.5);
 	
-	var __visual = this.game.add.sprite(0.0, 0.0, 'square', null, __visualParent);
+	var __visual = this.game.add.sprite(0.0, 0.0, 'Sand Block White Triangle 2', null, __visualParent);
 	__visual.anchor.set(0.5, 0.5);
 	
 	var __flash = this.game.add.sprite(0.0, 0.0, 'square', null, __visualParent);
+	__flash.scale.set(0.0, 0.0);
 	__flash.anchor.set(0.5, 0.5);
 	
-	var __highlight = this.game.add.sprite(0.0, 0.0, 'square', null, __visualParent);
+	var __highlight = this.game.add.sprite(0.0, 0.0, 'Highlighted Triangle Block 1', null, __visualParent);
 	__highlight.anchor.set(0.5, 0.5);
+	
+	var __anim = this.game.add.sprite(0.0, 25.0, 'sandBlockAtlas2', 'Triangle Block 2 Melt (Grayscale)/Triangle Melt 1.png', __visualParent);
+	__anim.scale.set(0.6, 0.6);
+	__anim.anchor.set(0.5, 0.5);
+	__anim.animations.add('destroy', [], 24, false);
 	
 	
 	
@@ -41,6 +48,7 @@ function BNBBlock_Triangle(aGame, aParent, aName, aAddToStage, aEnableBody, aPhy
 	this.f_visual = __visual;
 	this.f_flash = __flash;
 	this.f_highlight = __highlight;
+	this.f_anim = __anim;
 	
 	this.afterCreate();
 	
@@ -63,9 +71,10 @@ BNBBlock_Triangle.prototype.initialize = function(assocBoard, colliderBounds, vi
 	if(this.empty){
 		return;
 	}
-	angle = angle==undefined?0:angle;
+
+	this.colliderAngle = angle==undefined?0:angle;
 	var newCollider = new Phaser.Polygon(this.collider.topLeft, this.collider.bottomRight, this.collider.bottomLeft);
-	newCollider.rotateAround(this.collider.centerX, this.collider.centerY, angle);
+	newCollider.rotateAround(this.collider.centerX, this.collider.centerY, this.colliderAngle);
 	newCollider.points.forEach(function(p){
 		p.x = p.x<this.collider.centerX?this.collider.left:this.collider.right;
 		p.y = p.y<this.collider.centerY?this.collider.top:this.collider.bottom;
@@ -74,7 +83,93 @@ BNBBlock_Triangle.prototype.initialize = function(assocBoard, colliderBounds, vi
 	var dc = this.game.add.graphics(0,0);
 	//this.add(dc);
 	dc.beginFill(0xff0000);
+	
+	
+	
 	//dc.drawShape()
-	dc.drawShape(this.collider);
-	this.mask = dc;
+	//dc.drawShape(this.collider);
+	//this.mask = dc;
 };
+// ◣: 0
+// ◤: 90
+// ◥ : 180
+// ◢: 270
+BNBBlock_Triangle.prototype.initColorVisuals = function(){
+	
+	this.healthText.setText(this.colliderAngle);
+	var frames = [];
+	console.log(this.colliderAngle);
+	
+	this.f_visual.tint = "0x" + Util.LightenDarkenColor(this.baseColor.toString(), this.game.rnd.realInRange(-30, 30));
+	this.f_anim.tint = this.f_visual.tint;
+	switch(this.colliderAngle){
+		case 0:
+			this.assocBoard.sandBlocks.push(this);
+			this.f_visual.loadTexture("Sand Block White Triangle");
+			this.f_highlight.loadTexture("Highlighted Triangle Block 2");
+			this.f_visualParent.scale.x*=-1;
+			frames = Phaser.Animation.generateFrameNames("Triangle Block 1 Melt (Grayscale)/Triangle Melt ", 1, 26, ".png");
+			this.f_visualParent.x-=2;
+			this.f_visualParent.y+=2;
+			break;
+		case 90:
+			this.assocBoard.sandBlocks.push(this);
+			this.f_visual.loadTexture("Sand Block White Triangle 2");
+			this.f_highlight.loadTexture("Highlighted Triangle Block 1");
+			frames = Phaser.Animation.generateFrameNames("Triangle Block 2 Melt (Grayscale)/Triangle Melt ", 1, 27, ".png");
+			this.f_visualParent.x-=2;
+			this.f_visualParent.y-=2;
+			break;
+		case 180:
+			this.assocBoard.sandBlocks.push(this);
+			this.f_visual.loadTexture("Sand Block White Triangle 2");
+			this.f_highlight.loadTexture("Highlighted Triangle Block 1");
+			this.f_visualParent.scale.x*=-1;
+			this.f_visualParent.x+=2;
+			this.f_visualParent.y-=2;
+			frames = Phaser.Animation.generateFrameNames("Triangle Block 2 Melt (Grayscale)/Triangle Melt ", 1, 27, ".png");
+			break;
+		case 270:
+			this.assocBoard.sandBlocks.push(this);
+			this.f_visual.loadTexture("Sand Block White Triangle");
+			this.f_highlight.loadTexture("Highlighted Triangle Block 2");
+			frames = Phaser.Animation.generateFrameNames("Triangle Block 1 Melt (Grayscale)/Triangle Melt ", 1, 26, ".png");
+			this.f_visualParent.x+=2;
+			this.f_visualParent.y+=2;
+			break;
+		default:
+			break;
+	}
+	this.f_visualParent.resizeWithWidth(this.visualBounds.width*2.6);
+	this.f_anim.animations.add("destroy", frames, 24);
+	this.f_anim.scale.multiply(Math.sign(this.f_visual.scale.x), Math.sign(this.f_visual.scale.y));
+	this.f_anim.alpha = 0;
+	//this.f_anim.play("destroy");
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

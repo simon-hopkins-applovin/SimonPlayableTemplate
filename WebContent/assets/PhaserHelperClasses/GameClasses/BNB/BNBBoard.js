@@ -25,6 +25,7 @@ function BNBBoard(_game, _scene, _backingSprite, _blockParent, _shadowParent, _f
 	this.is3D = _is3D;
 	this.ballBounceBounds = _ballBounceBounds;
 	this.dc.lineStyle(3, 0xff0000);
+	this.sandBlocks = [];
 }
 
 BNBBoard.prototype.getBlock = function(row, col){
@@ -159,14 +160,14 @@ BNBBoard.prototype.renderBoard = function(boundsRect, blocksArray, blockFeedback
 				
 				
 			}
-			 
+			newBlock.row = row;
+			newBlock.col = col;
 			newBlock.initialize(this, colliderBounds ,visualBounds, rowArr[col], blockFeedbackParticleQueue, angle);
 			if(this.is3D){
 				var shadowPos = this.OOPT.transform(xPos, yPos+ 10);
 				newBlock.initShadow(visualBounds.clone().centerOn(shadowPos.x, shadowPos.y), this.shadowParent);
 			}
-			newBlock.row = row;
-			newBlock.col = col;
+			
 			this.maxPoints += newBlock.health;
 			this.blockArr[row].push(newBlock);
 			
@@ -181,7 +182,7 @@ BNBBoard.prototype.getClosestBlock = function(xPos, yPos){
 	var closestRow = Math.floor(Util.unlerp(this.boundsRect.top, this.boundsRect.bottom, yPos) * this.rows);
 	closestCol = Phaser.Math.clamp(closestCol, 0, this.cols-1);
 	closestRow = Phaser.Math.clamp(closestRow, 0, this.rows-1);
-	return {row: closestRow, col: closestCol};
+	return {row: closestRow, col: closestCol, block: this.getBlock(closestRow, closestCol)};
 };
 
 BNBBoard.prototype.getBoardIntersection = function(line){
@@ -266,7 +267,7 @@ BNBBoard.prototype.getBlockIntersection = function(moveLine, lastBlock){
 	
 };
 
-
+//TODO: make it work with a negative speed
 BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, retArr, lastCollision){
 	
 	if(ball.velocity.getMagnitude() == 0){
@@ -276,7 +277,6 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 		retArr.push(this.is3D?this.OOPT.transform(nextMoveLine.start):nextMoveLine.start);
 
 	}
-
 	var closestCoord = this.getClosestBlock(nextMoveLine.start.x, nextMoveLine.start.y);
 	var closestCol = closestCoord.col;
 	var closestRow = closestCoord.row;
@@ -329,7 +329,7 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 		}
 		var reflectedRad = Phaser.Line.reflect(nextMoveLine, foundCollision.i1.side);
 		
-		ball.velocity = new Phaser.Point(Math.cos(reflectedRad) * ball.velocity.getMagnitude(), Math.sin(reflectedRad) * ball.velocity.getMagnitude());
+		ball.velocity = new Phaser.Point(Math.cos(reflectedRad) * ball.speed, Math.sin(reflectedRad) * ball.speed);
 		var startPos = nextMoveLine.start;
 		var wallPointForBall = new Phaser.Point(foundCollision.i1.point.x, foundCollision.i1.point.y);
 		if(hitWall){
@@ -348,13 +348,11 @@ BNBBoard.prototype.moveBall = function(ball, nextMoveLine, maxDist, distSoFar, r
 	//just move the ball along the line
 	//don't need to recurse because the ball has already moved it's max distance
 	var visualPosition = this.is3D?this.OOPT.transform(nextMoveLine.end.x, nextMoveLine.end.y):nextMoveLine.end.clone();
-	var endBlock = this.getClosestBlock(nextMoveLine.end.x, nextMoveLine.end.y);
-	endBlock = this.getBlock(endBlock.row, endBlock.col);
-	if(this.boardContainsPoint(nextMoveLine.end.x, nextMoveLine.end.y) && endBlock.empty){
-		
-		visualPosition.clampX(endBlock.collider.left + ball.collider.radius, endBlock.collider.right-ball.collider.radius);
-		visualPosition.clampY(endBlock.collider.top + ball.collider.radius, endBlock.collider.bottom-ball.collider.radius);
-	}
+//	if(this.boardContainsPoint(nextMoveLine.end.x, nextMoveLine.end.y) && endBlock.empty){
+//		
+//		visualPosition.clampX(endBlock.collider.left + ball.collider.radius, endBlock.collider.right-ball.collider.radius);
+//		visualPosition.clampY(endBlock.collider.top + ball.collider.radius, endBlock.collider.bottom-ball.collider.radius);
+//	}
 
 	ball.updatePosition(nextMoveLine.end.x, nextMoveLine.end.y, visualPosition.x ,visualPosition.y);
 	if(retArr){
@@ -394,4 +392,33 @@ BNBBoard.prototype.pixelCallBack = function(data){
 		
 	};
 };
+
+
+
+
+BNBBoard.prototype.forEachCircle = function(circle, callback){
+	var numLoops = circle.circumference() / (this.blockWidth/2);
+	numLoops = Math.ceil(numLoops);
+	
+	for(var i = 0; i<numLoops; i++){
+		var angle = Phaser.Math.linear(0, Math.PI * 2, i/numLoops);
+		var pointToCheck = new Phaser.Point(circle.x + Math.cos(angle)*circle.radius, circle.y + Math.sin(angle)*circle.radius);
+		var blockCoord = this.getClosestBlock(pointToCheck.x, pointToCheck.y);
+		var block = blockCoord.block;
+		if(block.empty){
+			continue;
+		}
+		callback.call(this, block);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
 

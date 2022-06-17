@@ -43,23 +43,29 @@ PIXI.DisplayObject.prototype.createCTA= function(doScale, touchCondition, hAncho
 			AppLovin.redirect();
 		}
 	}, this);
-	
+	this.getCTABounds = function(){
+		return new Phaser.Rectangle().copyFrom(this, true);
+	};
 	if(doScale){
 		this.ctaScaleTween = this.game.add.tween(this.scale).to({x: "0.1", y: "0.1"}, 420, Phaser.Easing.Sinusoidal.InOut, true, 0, -1, true);
 	}
 };
 
 PIXI.DisplayObject.prototype.resizeWithWidth= function(newWidth){
+	var scaleMod = this.scale.clone().divide(Math.abs(this.scale.x), Math.abs(this.scale.y));	
 	this.scale.setTo(1);
 	var factor = newWidth/this.width;
 	this.scale.setTo(this.scale.x * factor);
+	this.scale.multiply(scaleMod.x,scaleMod.y);
 	return this;
 };
 
 PIXI.DisplayObject.prototype.resizeWithHeight= function(newHeight){
+	var scaleMod = this.scale.clone().divide(Math.abs(this.scale.x), Math.abs(this.scale.y));
 	this.scale.setTo(1);
 	var factor = newHeight/this.height;
 	this.scale.setTo(this.scale.y * factor);
+	this.scale.multiply(scaleMod.x,scaleMod.y);
 	return this;
 };
 
