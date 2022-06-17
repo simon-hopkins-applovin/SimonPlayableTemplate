@@ -8,7 +8,7 @@ ECHO adding MiscObjects.js
 git update-index --no-skip-worktree WebContent\js\MiscObjects.js
 ECHO adding phaser_simon.js
 git update-index --no-skip-worktree WebContent\lib\phaser_simon.js
-ECHO adding PhaserHelperClasses"
+ECHO adding PhaserHelperClasses
 forfiles /P "WebContent\assets\PhaserHelperClasses" /M "*.*" /S /C "cmd /c git update-index --no-skip-worktree @file"
 git update-index --no-skip-worktree .gitignore
 
